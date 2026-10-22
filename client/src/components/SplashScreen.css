@@ -1,0 +1,296 @@
+/* =========================================================================
+   FLOOR SHIELD AUSTRALIA - LITE LUXURY FLASH SCREEN (SPLASH SCREEN)
+   Crisp Architectural Light Aesthetic with Animated Brand Emblem
+   (Zero Loading Bars or Progress Spinners)
+   ========================================================================= */
+
+.fs-splash-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  z-index: 9999999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8fafc;
+  background-image: 
+    radial-gradient(circle at 50% 45%, rgba(234, 88, 12, 0.09) 0%, rgba(248, 250, 252, 0) 65%),
+    radial-gradient(circle at 15% 85%, rgba(2, 132, 199, 0.06) 0%, transparent 45%),
+    radial-gradient(circle at 85% 15%, rgba(234, 88, 12, 0.07) 0%, transparent 45%);
+  color: #0f172a;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow: hidden;
+  user-select: none;
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform, filter;
+}
+
+.fs-splash-overlay.is-exiting {
+  opacity: 0;
+  transform: scale(1.03);
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+/* Subtle architectural grid pattern on light background */
+.fs-splash-grid {
+  position: absolute;
+  inset: 0;
+  background-size: 36px 36px;
+  background-image: 
+    linear-gradient(to right, rgba(15, 23, 42, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.035) 1px, transparent 1px);
+  mask-image: radial-gradient(circle at center, black 45%, transparent 80%);
+  -webkit-mask-image: radial-gradient(circle at center, black 45%, transparent 80%);
+  pointer-events: none;
+}
+
+/* Ambient warm aura behind the emblem */
+.fs-splash-ambient-aura {
+  position: absolute;
+  width: 440px;
+  height: 440px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(234, 88, 12, 0.15) 0%, rgba(234, 88, 12, 0) 70%);
+  filter: blur(40px);
+  animation: fsSplashLightAura 3s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes fsSplashLightAura {
+  0% {
+    transform: scale(0.88);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1.2);
+    opacity: 0.9;
+  }
+}
+
+/* Central Content Container */
+.fs-splash-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 520px;
+  width: 90%;
+  text-align: center;
+  animation: fsSplashLightEnter 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fsSplashLightEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(14px) scale(0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Emblem Outer Zone */
+.fs-splash-emblem-wrapper {
+  position: relative;
+  width: 280px;
+  height: 126px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 22px;
+}
+
+/* Ambient Orbit Ring */
+.fs-splash-orbit-ring {
+  position: absolute;
+  inset: -12px -16px;
+  border-radius: 36px;
+  border: 1.5px dashed rgba(234, 88, 12, 0.35);
+  animation: fsSplashDashPulse 3.5s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes fsSplashDashPulse {
+  0% {
+    opacity: 0.35;
+    transform: scale(0.98);
+  }
+  100% {
+    opacity: 0.85;
+    transform: scale(1.02);
+  }
+}
+
+/* Crisp White Floating Emblem Card */
+.fs-splash-logo-card {
+  position: relative;
+  width: 256px;
+  height: 100px;
+  border-radius: 26px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 
+    0 18px 45px rgba(15, 23, 42, 0.08),
+    0 6px 18px rgba(234, 88, 12, 0.08),
+    inset 0 1px 1px rgba(255, 255, 255, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 24px;
+  overflow: hidden;
+  animation: fsSplashFloat 3.4s ease-in-out infinite;
+}
+
+@keyframes fsSplashFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+/* Subtle Light Shimmer Sheen */
+.fs-splash-logo-card::after {
+  content: '';
+  position: absolute;
+  top: -60%;
+  left: -60%;
+  width: 220%;
+  height: 220%;
+  background: linear-gradient(
+    65deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.85) 50%,
+    transparent 60%
+  );
+  transform: rotate(25deg);
+  animation: fsSplashLightShimmer 2.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes fsSplashLightShimmer {
+  0% {
+    transform: translateX(-120%) rotate(25deg);
+  }
+  60%, 100% {
+    transform: translateX(120%) rotate(25deg);
+  }
+}
+
+.fs-splash-logo-img {
+  width: 208px;
+  height: 58px;
+  max-height: 58px;
+  object-fit: contain;
+}
+
+/* Fallback badge if image fails */
+.fs-splash-fallback-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #0f172a;
+}
+
+/* Brand Badges Row */
+.fs-splash-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.fs-splash-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #fff7ed;
+  color: #ea580c;
+  border: 1px solid #fed7aa;
+  padding: 4px 13px;
+  border-radius: 9999px;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: 0 1px 3px rgba(234, 88, 12, 0.08);
+}
+
+.fs-splash-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #ea580c;
+  box-shadow: 0 0 6px #ea580c;
+  animation: fsSplashDotBlink 1.4s ease-in-out infinite;
+}
+
+@keyframes fsSplashDotBlink {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.75); }
+}
+
+.fs-splash-badge-blue {
+  background: #f0f9ff;
+  color: #0284c7;
+  border: 1px solid #bae6fd;
+  box-shadow: 0 1px 3px rgba(2, 132, 199, 0.08);
+}
+
+.fs-splash-subtitle {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: #64748b;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* Subtle Quality Hallmark */
+.fs-splash-footer {
+  position: absolute;
+  bottom: 26px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: #64748b;
+}
+
+.fs-splash-footer-shield {
+  color: #ea580c;
+  display: inline-flex;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .fs-splash-emblem-wrapper {
+    width: 230px;
+    height: 110px;
+    margin-bottom: 16px;
+  }
+  .fs-splash-logo-card {
+    width: 210px;
+    height: 84px;
+    border-radius: 20px;
+  }
+  .fs-splash-logo-img {
+    width: 175px;
+    height: 48px;
+  }
+  .fs-splash-subtitle {
+    font-size: 0.76rem;
+  }
+}

@@ -5,11 +5,13 @@ import './index.css';
 
 import { SiteProvider } from './context/SiteContext';
 import AppRouter from './router/AppRouter';
+import SplashScreen from './components/SplashScreen';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <SiteProvider>
+        <SplashScreen />
         <AppRouter />
       </SiteProvider>
     </BrowserRouter>
