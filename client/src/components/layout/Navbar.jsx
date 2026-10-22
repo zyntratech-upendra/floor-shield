@@ -192,67 +192,42 @@ export default function Navbar() {
               onMouseLeave={handleNavLeave}
             >
               <button
-                onClick={() => goTo('/services')}
-                className={`nav-link-btn ${activeDropdown === 'services' || location.pathname.startsWith('/services') ? 'active' : ''}`}
-              >
-                Services
-              </button>
-              <button
                 type="button"
-                className="nav-menu-toggle"
-                aria-label="Open services menu"
-                aria-expanded={activeDropdown === 'services'}
                 onClick={() => setActiveDropdown(activeDropdown === 'services' ? null : 'services')}
+                className={`nav-link-btn ${activeDropdown === 'services' || location.pathname.startsWith('/services') ? 'active' : ''}`}
+                aria-expanded={activeDropdown === 'services'}
+                style={{ cursor: 'pointer' }}
               >
-                <ChevronDown size={14} style={{ transform: activeDropdown === 'services' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s ease' }} />
+                <span>Services</span>
+                <ChevronDown size={14} style={{ transform: activeDropdown === 'services' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s ease', opacity: 0.7 }} />
               </button>
             </div>
 
-            {/* 4. Industry with Mega Menu (Safecoat style) */}
-            <div 
-              className="nav-dropdown-wrapper"
-              onMouseEnter={() => handleNavHover('industry')}
-              onMouseLeave={handleNavLeave}
-            >
-              <button
-                onClick={() => goTo('/industry')}
-                className={`nav-link-btn ${activeDropdown === 'industry' || location.pathname === '/industry' ? 'active' : ''}`}
-              >
-                Industry
-              </button>
-              <button
-                type="button"
-                className="nav-menu-toggle"
-                aria-label="Open industry menu"
-                aria-expanded={activeDropdown === 'industry'}
-                onClick={() => setActiveDropdown(activeDropdown === 'industry' ? null : 'industry')}
-              >
-                <ChevronDown size={14} style={{ transform: activeDropdown === 'industry' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s ease' }} />
-              </button>
-            </div>
-
-            {/* 5. About Dropdown (Safecoat style) */}
+            {/* 4. About Dropdown (Safecoat style) */}
             <div 
               className="nav-dropdown-wrapper"
               onMouseEnter={() => handleNavHover('about')}
               onMouseLeave={handleNavLeave}
             >
               <button
-                onClick={() => goTo('/about')}
-                className={`nav-link-btn ${activeDropdown === 'about' || location.pathname === '/about' ? 'active' : ''}`}
-              >
-                About
-              </button>
-              <button
                 type="button"
-                className="nav-menu-toggle"
-                aria-label="Open about menu"
-                aria-expanded={activeDropdown === 'about'}
                 onClick={() => setActiveDropdown(activeDropdown === 'about' ? null : 'about')}
+                className={`nav-link-btn ${activeDropdown === 'about' || location.pathname === '/about' ? 'active' : ''}`}
+                aria-expanded={activeDropdown === 'about'}
+                style={{ cursor: 'pointer' }}
               >
-                <ChevronDown size={14} style={{ transform: activeDropdown === 'about' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s ease' }} />
+                <span>About</span>
+                <ChevronDown size={14} style={{ transform: activeDropdown === 'about' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s ease', opacity: 0.7 }} />
               </button>
             </div>
+
+            {/* 5. Contact */}
+            <button
+              onClick={() => goTo('/contact')}
+              className={`nav-link-btn ${location.pathname === '/contact' ? 'active' : ''}`}
+            >
+              Contact
+            </button>
 
           </nav>
 
@@ -268,7 +243,7 @@ export default function Navbar() {
             </a>
 
             <button 
-              onClick={() => goTo('/calculator')}
+              onClick={() => goTo('/get-a-quote')}
               className="quote-pill-btn"
             >
               <span>GET A QUOTE</span>
@@ -306,25 +281,32 @@ export default function Navbar() {
               style={{
                 top: 'calc(100% + 2px)',
                 display: 'grid',
-                gridTemplateColumns: '2.4fr 1fr',
+                gridTemplateColumns: 'minmax(0, 1fr) 280px',
                 gap: '24px'
               }}
             >
               <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', borderBottom: '1px solid #f1f5f9', paddingBottom: '10px' }}>
-                  <span style={{ fontSize: '0.82rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.08em', color: '#ea580c' }}>
-                    TURNKEY RESIN FLOORING SYSTEMS & SPECIFICATIONS
-                  </span>
+                {/* Header Sub-bar */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', borderBottom: '1px solid #f1f5f9', paddingBottom: '12px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span style={{ fontSize: '0.78rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.08em', color: '#ea580c' }}>
+                      Certified Systems &amp; Concrete Solutions
+                    </span>
+                    <span style={{ fontSize: '0.72rem', backgroundColor: '#fff7ed', color: '#ea580c', padding: '2px 8px', borderRadius: '4px', fontWeight: '800' }}>
+                      9 AVAILABLE
+                    </span>
+                  </div>
                   <button 
                     onClick={() => goTo('/services')}
-                    style={{ fontSize: '0.82rem', fontWeight: '700', color: '#64748b', background: 'none', display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer' }}
+                    style={{ fontSize: '0.82rem', fontWeight: '700', color: '#ea580c', background: 'none', display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer', border: 0 }}
                   >
-                    <span>View All Systems</span>
+                    <span>View All Services Overview</span>
                     <ChevronRight size={14} />
                   </button>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
+                {/* 3-Column Grid for Items */}
+                <div className="mega-services-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: '10px' }}>
                   {navFlooringSystems.map((item, idx) => (
                     <div 
                       key={idx} 
@@ -333,40 +315,51 @@ export default function Navbar() {
                     >
                       <img src={item.image} alt={item.name} />
                       <div style={{ flex: 1, minWidth: 0 }}>
-                        <div style={{ fontSize: '0.84rem', fontWeight: '800', color: '#0f172a', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                          {item.name}
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '6px' }}>
+                          <span className="service-nav-card-title">
+                            {item.name}
+                          </span>
+                          <ChevronRight size={14} className="service-nav-card-arrow" />
                         </div>
-                        <div style={{ fontSize: '0.72rem', color: '#64748b', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', marginTop: '2px' }}>
+                        <div className="service-nav-card-desc">
                           {item.desc}
                         </div>
+                        {item.badge && (
+                          <div style={{ marginTop: '5px' }}>
+                            <span className="service-nav-card-badge">
+                              {item.badge}
+                            </span>
+                          </div>
+                        )}
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Featured Callout Card */}
+              {/* Right Sidebar: Featured System & Rapid Quote Callout */}
               <div style={{
-                backgroundColor: '#fff7ed',
-                border: '1px solid #fed7aa',
-                borderRadius: '12px',
-                padding: '16px',
+                backgroundColor: '#f8fafc',
+                border: '1.5px solid #e2e8f0',
+                borderRadius: '14px',
+                padding: '18px',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'space-between'
+                justifyContent: 'space-between',
+                boxShadow: '0 4px 16px rgba(15, 23, 42, 0.03)'
               }}>
                 <div>
                   <div style={{
                     position: 'relative',
-                    borderRadius: '8px',
+                    borderRadius: '10px',
                     overflow: 'hidden',
-                    height: '120px',
-                    marginBottom: '12px',
-                    border: '1px solid #fdba74'
+                    height: '130px',
+                    marginBottom: '14px',
+                    border: '1px solid #cbd5e1'
                   }}>
                     <img 
-                      src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80" 
-                      alt="Industrial Floor System" 
+                      src="/images/epoxy-flake-garage.jpg" 
+                      alt="Floor Shield Turnkey Garage System" 
                       style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                     />
                     <div style={{
@@ -378,26 +371,56 @@ export default function Navbar() {
                       fontSize: '0.66rem',
                       fontWeight: '800',
                       padding: '3px 8px',
-                      borderRadius: '9999px',
-                      textTransform: 'uppercase'
+                      borderRadius: '4px',
+                      textTransform: 'uppercase',
+                      boxShadow: '0 2px 6px rgba(0,0,0,0.2)'
                     }}>
-                      APC Certified Applicator
+                      APC Certified Installers
+                    </div>
+                    <div style={{
+                      position: 'absolute',
+                      bottom: '8px',
+                      right: '8px',
+                      backgroundColor: 'rgba(15, 23, 42, 0.88)',
+                      color: '#ffffff',
+                      fontSize: '0.7rem',
+                      fontWeight: '800',
+                      padding: '2px 8px',
+                      borderRadius: '4px'
+                    }}>
+                      From $2,499
                     </div>
                   </div>
-                  <div style={{ fontSize: '0.96rem', fontWeight: '800', color: '#0f172a', lineHeight: 1.25, marginBottom: '6px' }}>
-                    Turnkey Project Engineering & Specification
+
+                  <div style={{ fontSize: '0.98rem', fontWeight: '800', color: '#0f172a', lineHeight: 1.25, marginBottom: '6px' }}>
+                    Seamless Resin Engineering
                   </div>
-                  <p style={{ fontSize: '0.78rem', color: '#475569', lineHeight: 1.45, marginBottom: '12px' }}>
-                    Industrial resin systems formulated for harsh chemical washdowns, forklift traffic, and HACCP compliance. Backed by up to 10-Year Warranty.
+                  <p style={{ fontSize: '0.78rem', color: '#64748b', lineHeight: 1.45, marginBottom: '14px' }}>
+                    Heavy diamond prep with CSP-2 profiling. 100% solids epoxy basecoats, decorative flake broadcast &amp; non-yellowing polyaspartic protection.
                   </p>
+                  
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '16px', fontSize: '0.76rem', color: '#334155', fontWeight: '600' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <CheckCircle2 size={13} color="#ea580c" />
+                      <span>$0 Upfront Deposit Needed</span>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <CheckCircle2 size={13} color="#ea580c" />
+                      <span>Rapid 2-Day Turnaround</span>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <CheckCircle2 size={13} color="#ea580c" />
+                      <span>10-Year Coating Warranty</span>
+                    </div>
+                  </div>
                 </div>
 
                 <button 
-                  onClick={() => goTo('/calculator')}
+                  onClick={() => goTo('/get-a-quote')}
                   className="btn-primary"
-                  style={{ width: '100%', fontSize: '0.84rem', padding: '9px 12px' }}
+                  style={{ width: '100%', fontSize: '0.84rem', padding: '10px 14px', justifyContent: 'center' }}
                 >
-                  <span>Get Free System Spec</span>
+                  <span>Request a Fast Quote</span>
                   <ArrowRight size={14} />
                 </button>
               </div>
@@ -466,7 +489,7 @@ export default function Navbar() {
                   </span>
                 </div>
                 <button 
-                  onClick={() => goTo('/calculator')}
+                  onClick={() => goTo('/get-a-quote')}
                   style={{
                     backgroundColor: '#ea580c',
                     color: '#ffffff',
@@ -481,7 +504,7 @@ export default function Navbar() {
                     gap: '6px'
                   }}
                 >
-                  <span>Consult an Engineer</span>
+                  <span>Request Engineering Quote</span>
                   <ArrowRight size={14} />
                 </button>
               </div>
@@ -589,7 +612,7 @@ export default function Navbar() {
                 <span>Call Now</span>
               </a>
               <button 
-                onClick={() => goTo('/calculator')}
+                onClick={() => goTo('/get-a-quote')}
                 className="quote-pill-btn"
                 style={{ fontSize: '0.8rem', padding: '9px 6px' }}
               >
@@ -616,80 +639,81 @@ export default function Navbar() {
             </button>
 
             {/* Services Accordion */}
-            <div style={{ border: '1px solid #e2e8f0', borderRadius: '8px', overflow: 'hidden' }}>
+            <div style={{ border: '1.5px solid #e2e8f0', borderRadius: '12px', overflow: 'hidden', backgroundColor: '#ffffff' }}>
               <button 
                 onClick={() => setMobileExpandedSection(mobileExpandedSection === 'services' ? null : 'services')}
-                style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 14px', background: '#f8fafc', fontWeight: '800', color: '#0f172a', border: 'none', cursor: 'pointer' }}
+                style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 16px', background: mobileExpandedSection === 'services' ? '#fff7ed' : '#f8fafc', fontWeight: '800', color: mobileExpandedSection === 'services' ? '#ea580c' : '#0f172a', border: 'none', cursor: 'pointer', transition: 'all 0.15s ease' }}
               >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <Layers3 size={18} color="#ea580c" />
-                  <span>Flooring Systems & Services</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <Layers3 size={20} color="#ea580c" />
+                  <span style={{ fontSize: '0.94rem' }}>Flooring Systems &amp; Services</span>
                 </div>
-                <ChevronDown size={16} style={{ transform: mobileExpandedSection === 'services' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+                <ChevronDown size={18} style={{ transform: mobileExpandedSection === 'services' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s', color: '#ea580c' }} />
               </button>
               {mobileExpandedSection === 'services' && (
-                <div style={{ padding: '10px', display: 'flex', flexDirection: 'column', gap: '8px', background: '#ffffff' }}>
+                <div style={{ padding: '10px 12px 14px', display: 'flex', flexDirection: 'column', gap: '6px', background: '#ffffff', borderTop: '1px solid #fed7aa' }}>
+                  <div style={{ padding: '6px 4px 8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontSize: '0.74rem', fontWeight: '800', color: '#ea580c', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                      Certified Systems
+                    </span>
+                    <button 
+                      onClick={() => goTo('/services')} 
+                      style={{ fontSize: '0.76rem', fontWeight: '700', color: '#0f172a', background: 'none', border: 0, display: 'flex', alignItems: 'center', gap: '3px', cursor: 'pointer' }}
+                    >
+                      <span>View All</span>
+                      <ChevronRight size={13} color="#ea580c" />
+                    </button>
+                  </div>
+
                   {navFlooringSystems.map((item, idx) => (
                     <button
                       type="button"
                       key={idx}
                       onClick={() => goTo(item.route)}
-                      style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '6px 8px', borderRadius: '6px', cursor: 'pointer', border: '1px solid #f1f5f9', background: '#fff', textAlign: 'left' }}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '12px',
+                        padding: '10px 10px',
+                        borderRadius: '10px',
+                        cursor: 'pointer',
+                        border: '1px solid #f1f5f9',
+                        background: '#ffffff',
+                        textAlign: 'left',
+                        transition: 'background-color 0.15s ease'
+                      }}
+                      onTouchStart={(e) => { e.currentTarget.style.backgroundColor = '#fff7ed'; }}
+                      onTouchEnd={(e) => { e.currentTarget.style.backgroundColor = '#ffffff'; }}
                     >
-                      <img src={item.image} alt={item.name} style={{ width: '36px', height: '36px', borderRadius: '6px', objectFit: 'cover' }} />
-                      <div>
-                        <div style={{ fontSize: '0.84rem', fontWeight: '800', color: '#0f172a' }}>{item.name}</div>
-                        <div style={{ fontSize: '0.7rem', color: '#64748b' }}>{item.desc}</div>
+                      <img src={item.image} alt={item.name} style={{ width: '44px', height: '44px', borderRadius: '8px', objectFit: 'cover', flexShrink: 0, border: '1px solid #e2e8f0' }} />
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '4px' }}>
+                          <span style={{ fontSize: '0.86rem', fontWeight: '800', color: '#0f172a' }}>{item.name}</span>
+                          {item.badge && (
+                            <span style={{ fontSize: '0.62rem', fontWeight: '800', backgroundColor: '#f1f5f9', color: '#475569', padding: '1px 6px', borderRadius: '4px', textTransform: 'uppercase' }}>
+                              {item.badge}
+                            </span>
+                          )}
+                        </div>
+                        <div style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '2px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                          {item.desc}
+                        </div>
                       </div>
+                      <ChevronRight size={14} color="#cbd5e1" style={{ flexShrink: 0 }} />
                     </button>
                   ))}
-                  <button type="button" className="industry-card-link" onClick={() => goTo('/services')} style={{ padding: '8px 6px' }}>
-                    View all services <ChevronRight size={15} />
-                  </button>
                 </div>
               )}
             </div>
 
-            {/* Industry Accordion */}
-            <div style={{ border: '1px solid #e2e8f0', borderRadius: '8px', overflow: 'hidden' }}>
-              <button 
-                onClick={() => setMobileExpandedSection(mobileExpandedSection === 'industry' ? null : 'industry')}
-                style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 14px', background: '#f8fafc', fontWeight: '800', color: '#0f172a', border: 'none', cursor: 'pointer' }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <Factory size={18} color="#ea580c" />
-                  <span>Industries Served</span>
-                </div>
-                <ChevronDown size={16} style={{ transform: mobileExpandedSection === 'industry' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
-              </button>
-              {mobileExpandedSection === 'industry' && (
-                <div style={{ padding: '10px', display: 'flex', flexDirection: 'column', gap: '10px', background: '#ffffff' }}>
-                  {navIndustries.map((ind, idx) => (
-                    <div key={idx}>
-                      <button
-                        type="button"
-                        onClick={() => goTo(`/industry?category=${encodeURIComponent(ind.category)}`)}
-                        style={{ fontSize: '0.82rem', fontWeight: '800', color: '#ea580c', marginBottom: '4px', background: 'none', padding: 0, textAlign: 'left' }}
-                      >
-                        {ind.category}
-                      </button>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                        {ind.items.map((sub, sIdx) => (
-                          <button
-                            type="button"
-                            key={sIdx}
-                            onClick={() => goTo(`/industry?category=${encodeURIComponent(ind.category)}`)}
-                            style={{ fontSize: '0.78rem', color: '#334155', padding: '4px 6px', borderRadius: '4px', background: '#f8fafc', cursor: 'pointer', textAlign: 'left' }}
-                          >
-                            • {sub}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
+            {/* Contact */}
+            <button 
+              onClick={() => goTo('/contact')}
+              style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', borderRadius: '8px', background: location.pathname === '/contact' ? '#fff7ed' : '#f8fafc', color: location.pathname === '/contact' ? '#ea580c' : '#0f172a', fontWeight: '800', border: '1px solid #e2e8f0', textAlign: 'left', cursor: 'pointer' }}
+            >
+              <Phone size={18} color="#ea580c" />
+              <span>Contact Us &amp; Support</span>
+            </button>
 
             {/* About / Certifications */}
             <div style={{ border: '1px solid #e2e8f0', borderRadius: '8px', overflow: 'hidden' }}>

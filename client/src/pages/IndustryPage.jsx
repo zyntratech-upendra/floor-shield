@@ -32,7 +32,7 @@ export default function IndustryPage() {
               From food-safe kitchens to busy warehouses, Floor Shield specifies
               hard-wearing resin systems around the work your floor needs to do.
             </p>
-            <button className="btn-primary" onClick={() => navigate('/calculator')}>
+            <button className="btn-primary" onClick={() => navigate('/get-a-quote')}>
               Discuss your project <ArrowRight size={17} />
             </button>
           </motion.div>
@@ -97,7 +97,7 @@ export default function IndustryPage() {
             <h2>Talk through your site, traffic and turnaround needs.</h2>
             <p>Serving commercial and industrial sites across Victoria.</p>
           </div>
-          <button className="btn-primary" onClick={() => navigate('/calculator')}>
+          <button className="btn-primary" onClick={() => navigate('/get-a-quote')}>
             Request a project estimate <ArrowRight size={17} />
           </button>
         </div>

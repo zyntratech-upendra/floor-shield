@@ -10,7 +10,7 @@ export default function SettingsPage({ settings, onChange, onSave }) {
       icon: Phone,
       fields: [
         { label: 'Site Name', key: 'siteName', placeholder: 'Floor Shield Australia' },
-        { label: 'Phone Number', key: 'phone', placeholder: '1800 231 907' },
+        { label: 'Phone Number', key: 'phone', placeholder: '0489 074 340' },
         { label: 'Email Address', key: 'email', placeholder: 'info@floorshield.au' },
         { label: 'Office Address', key: 'address', placeholder: 'Unit 1/76 Rushdale St...' },
         { label: 'ABN', key: 'abn', placeholder: '84 629 184 921' },

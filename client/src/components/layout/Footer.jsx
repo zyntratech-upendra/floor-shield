@@ -115,8 +115,12 @@ export default function Footer() {
               <a href="/admin/login" style={{ color: '#ea580c', fontWeight: '600', textDecoration: 'none' }}>
                 Admin Portal
               </a>
-              <span>Privacy Policy</span>
-              <span>Terms of Installation</span>
+              <Link to="/privacy-policy" style={{ color: '#94a3b8', textDecoration: 'none' }}>
+                Privacy Policy
+              </Link>
+              <Link to="/terms-and-conditions" style={{ color: '#94a3b8', textDecoration: 'none' }}>
+                Terms &amp; Conditions
+              </Link>
             </div>
           </div>
         </div>

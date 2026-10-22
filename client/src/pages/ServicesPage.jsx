@@ -82,16 +82,25 @@ export default function ServicesPage() {
                 </div>
               </div>
 
-              <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
+              <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                <button 
+                  onClick={() => navigate(`/services/${srv.slug}`)}
+                  className="btn-primary"
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
+                >
+                  <span>View Detailed Specifications</span>
+                  <ArrowRight size={16} />
+                </button>
                 <button 
                   onClick={() => {
                     setQuoteForm({ ...quoteForm, serviceType: srv.title });
-                    navigate('/calculator');
+                    navigate(`/get-a-quote?service=${encodeURIComponent(srv.title)}`);
                   }}
-                  className="btn-primary"
+                  className="btn-secondary"
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
                 >
-                  <span>Calculate Cost For This System</span>
-                  <ArrowRight size={16} />
+                  <span>Request a Quote</span>
+                  <ArrowRight size={15} />
                 </button>
                 <a 
                   href={`tel:${settings.phone?.replace(/\s+/g, '')}`}

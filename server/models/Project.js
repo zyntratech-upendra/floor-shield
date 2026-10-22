@@ -8,9 +8,18 @@ const ProjectSchema = new mongoose.Schema({
   finish: { type: String },
   squareMeters: { type: String },
   duration: { type: String },
+  description: { type: String },
   imageBefore: { type: String },
   imageAfter: { type: String },
-  description: { type: String },
+  beforeImages: [{ type: String }],
+  afterImages: [{ type: String }],
+  comparisonViews: [{
+    title: { type: String },
+    beforeImage: { type: String },
+    afterImage: { type: String },
+    beforeLabel: { type: String },
+    afterLabel: { type: String }
+  }],
   clientCompany: { type: String },
   testimonial: { type: String },
   clientName: { type: String }

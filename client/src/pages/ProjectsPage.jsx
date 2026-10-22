@@ -98,21 +98,22 @@ export default function ProjectsPage() {
 
               <button
                 onClick={() => navigate(getProjectPath(proj))}
-                className="industry-card-link"
-                style={{ marginBottom: '14px' }}
+                className="btn-primary"
+                style={{ width: '100%', fontSize: '0.92rem', justifyContent: 'center', marginBottom: '10px' }}
               >
-                View project details <ArrowRight size={15} />
+                <span>View project details</span>
+                <ArrowRight size={16} />
               </button>
               <button 
                 onClick={() => {
                   setQuoteForm({ ...quoteForm, serviceType: proj.category });
-                  navigate('/calculator');
+                  navigate(`/get-a-quote?service=${encodeURIComponent(proj.category || '')}`);
                 }}
                 className="btn-secondary"
-                style={{ width: '100%', fontSize: '0.9rem' }}
+                style={{ width: '100%', fontSize: '0.85rem', justifyContent: 'center' }}
               >
-                <span>Inquire About A Finish Like This</span>
-                <ArrowRight size={16} />
+                <span>Get a Quote for Similar Floor</span>
+                <ArrowRight size={14} />
               </button>
             </div>
           </div>

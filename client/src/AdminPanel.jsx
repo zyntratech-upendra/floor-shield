@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { LogOut, ChevronRight, RefreshCw, Bell, Home, ExternalLink } from 'lucide-react';
+import { LogOut, ChevronRight, RefreshCw, Bell, Home, ExternalLink, Menu, X } from 'lucide-react';
 import { API_BASE, NAV } from './admin/adminConstants';
 import { Toast } from './admin/AdminShared';
 import DashboardPage from './admin/pages/DashboardPage';
@@ -17,7 +17,8 @@ import './admin/admin.css';
 export default function AdminPanel() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [collapsed, setCollapsed] = useState(() => window.innerWidth <= 640);
+  const [collapsed, setCollapsed] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('dashboard');
   const [quotes, setQuotes] = useState([]);
   const [services, setServices] = useState([]);
@@ -79,6 +80,7 @@ export default function AdminPanel() {
   const handleNavClick = (id, path) => {
     setActiveTab(id);
     navigate(path);
+    setMobileOpen(false);
   };
 
   const handleStatusUpdate = async (quoteId, status) => {
@@ -327,57 +329,74 @@ export default function AdminPanel() {
   return (
     <div className="admin-shell" style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#f8fafc', fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif" }}>
 
+      {/* Mobile Drawer Backdrop */}
+      {mobileOpen && (
+        <div
+          onClick={() => setMobileOpen(false)}
+          className="admin-sidebar-backdrop"
+          style={{
+            position: 'fixed', inset: 0, backgroundColor: 'rgba(15, 23, 42, 0.5)',
+            backdropFilter: 'blur(3px)', zIndex: 999
+          }}
+        />
+      )}
+
       {/* ══ PREMIUM SIDEBAR ══ */}
-      <aside className="admin-sidebar" style={{
+      <aside className={`admin-sidebar ${mobileOpen ? 'mobile-open' : ''}`} style={{
         width: SBW, flexShrink: 0,
         backgroundColor: '#ffffff',
         borderRight: '1px solid #e2e8f0',
         display: 'flex', flexDirection: 'column',
-        position: 'fixed', top: 0, left: 0, bottom: 0, zIndex: 100,
-        transition: 'width 0.28s cubic-bezier(0.4,0,0.2,1)', overflow: 'hidden'
+        position: 'fixed', top: 0, left: 0, bottom: 0, zIndex: 1000,
+        transition: 'width 0.28s cubic-bezier(0.4,0,0.2,1), transform 0.28s cubic-bezier(0.4,0,0.2,1)', overflow: 'hidden'
       }}>
 
         {/* ── CLEAN LOGO BRANDING ── */}
-        {!collapsed ? (
-          <div style={{
-            height: '76px',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            padding: '10px 20px',
-            borderBottom: '1px solid #f1f5f9',
-            flexShrink: 0
-          }}>
+        <div style={{
+          height: '76px',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          padding: !collapsed ? '10px 16px 10px 20px' : '10px',
+          borderBottom: '1px solid #f1f5f9',
+          flexShrink: 0
+        }}>
+          {!collapsed ? (
             <img 
               src="/logo.png" 
               alt="Floor Shield" 
               style={{ 
-                maxHeight: '52px', 
-                maxWidth: '100%', 
+                maxHeight: '48px', 
+                maxWidth: '170px', 
                 objectFit: 'contain' 
               }}
               onError={e => { e.target.style.display='none'; }} 
             />
-          </div>
-        ) : (
-          /* Collapsed Logo */
-          <div style={{
-            height: '76px',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            padding: '10px',
-            borderBottom: '1px solid #f1f5f9',
-            flexShrink: 0
-          }}>
+          ) : (
             <img 
               src="/logo.png" 
               alt="Floor Shield" 
               style={{ 
-                maxHeight: '44px', 
-                maxWidth: '44px', 
-                objectFit: 'contain' 
+                maxHeight: '42px', 
+                maxWidth: '42px', 
+                objectFit: 'contain',
+                margin: '0 auto' 
               }}
               onError={e => { e.target.style.display='none'; }} 
             />
-          </div>
-        )}
+          )}
+
+          {/* Mobile Close Button */}
+          <button
+            onClick={() => setMobileOpen(false)}
+            className="admin-sidebar-close-btn"
+            style={{
+              display: 'none',
+              background: 'none', border: 'none', color: '#64748b',
+              padding: '6px', borderRadius: '8px', cursor: 'pointer'
+            }}
+          >
+            <X size={20} />
+          </button>
+        </div>
 
         {/* ── NAV LINKS ── */}
         <div style={{ flex: 1, padding: collapsed ? '12px 6px' : '14px 10px', display: 'flex', flexDirection: 'column', gap: '3px', overflowY: 'auto' }}>
@@ -467,61 +486,124 @@ export default function AdminPanel() {
 
         {/* Top Header */}
         <header className="admin-topbar" style={{
-          height: '68px', backgroundColor: '#ffffff',
+          minHeight: '64px', backgroundColor: '#ffffff',
           borderBottom: '1px solid #f1f5f9',
-          boxShadow: '0 1px 4px rgba(15,23,42,0.04)',
+          boxShadow: '0 1px 3px rgba(15,23,42,0.03)',
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          padding: '0 28px', position: 'sticky', top: 0, zIndex: 90, gap: '16px'
+          padding: '0 24px', position: 'sticky', top: 0, zIndex: 90, gap: '12px'
         }}>
-          {/* Page title */}
-          <div>
-            <h1 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: '1.15rem', fontWeight: '800', color: '#0f172a', letterSpacing: '-0.025em', margin: 0 }}>
-              {pageTitle[activeTab]}
-            </h1>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '2px' }}>
-              <span style={{ fontSize: '0.72rem', color: '#94a3b8' }}>Floor Shield Admin</span>
-              <span style={{ color: '#e2e8f0' }}>›</span>
-              <span style={{ fontSize: '0.72rem', color: '#ea580c', fontWeight: '600' }}>{pageTitle[activeTab]}</span>
+          {/* Left: Mobile Toggle + Title */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', minWidth: 0 }}>
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              title="Open Navigation"
+              className="admin-mobile-menu-btn"
+              style={{
+                width: '38px', height: '38px', borderRadius: '10px',
+                border: '1.5px solid #e2e8f0', backgroundColor: '#ffffff',
+                display: 'none', alignItems: 'center', justifyContent: 'center',
+                cursor: 'pointer', color: '#1e293b', flexShrink: 0
+              }}
+            >
+              <Menu size={18} />
+            </button>
+            <div style={{ minWidth: 0 }}>
+              <h1 className="admin-page-title" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: '1.18rem', fontWeight: '800', color: '#0f172a', letterSpacing: '-0.025em', margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                {pageTitle[activeTab]}
+              </h1>
+              <div className="admin-breadcrumbs" style={{ display: 'flex', alignItems: 'center', gap: '5px', marginTop: '1px' }}>
+                <span style={{ fontSize: '0.72rem', color: '#94a3b8' }}>Admin</span>
+                <span style={{ color: '#cbd5e1', fontSize: '0.7rem' }}>›</span>
+                <span style={{ fontSize: '0.72rem', color: '#ea580c', fontWeight: '600' }}>{pageTitle[activeTab]}</span>
+              </div>
             </div>
           </div>
 
-          {/* Right actions */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <button onClick={fetchAll} title="Refresh" style={{ width: '36px', height: '36px', borderRadius: '9px', border: '1.5px solid #e2e8f0', backgroundColor: '#ffffff', color: '#64748b', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
-              <RefreshCw size={15} />
-            </button>
-
-            {/* New quotes badge */}
+          {/* Right actions: Compact, balanced icons */}
+          <div className="admin-topbar-actions" style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
+            {/* New quotes pill */}
             {newCount > 0 && (
-              <button onClick={() => handleNavClick('quotes', '/admin/quotes')} style={{
-                display: 'flex', alignItems: 'center', gap: '7px',
-                padding: '7px 13px', borderRadius: '9px',
-                backgroundColor: '#fff7ed', border: '1.5px solid #fed7aa',
-                color: '#ea580c', fontSize: '0.8rem', fontWeight: '700', cursor: 'pointer', fontFamily: 'inherit'
-              }}>
-                <Bell size={14} />
-                {newCount} new lead{newCount > 1 ? 's' : ''}
+              <button
+                onClick={() => handleNavClick('quotes', '/admin/quotes')}
+                className="admin-lead-pill"
+                title={`${newCount} new pending quote inquiries`}
+                style={{
+                  display: 'flex', alignItems: 'center', gap: '6px',
+                  padding: '6px 12px', borderRadius: '999px',
+                  backgroundColor: '#fff7ed', border: '1px solid #fed7aa',
+                  color: '#ea580c', fontSize: '0.76rem', fontWeight: '750',
+                  cursor: 'pointer', fontFamily: 'inherit', flexShrink: 0
+                }}
+              >
+                <Bell size={13} color="#ea580c" />
+                <span>{newCount} new</span>
               </button>
             )}
 
-            <a href="/" target="_blank" style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '7px 13px', borderRadius: '9px', border: '1.5px solid #e2e8f0', backgroundColor: '#ffffff', color: '#334155', fontSize: '0.8rem', fontWeight: '600', textDecoration: 'none' }}>
-              <Home size={14} /> Live Site
+            {/* Refresh */}
+            <button
+              onClick={fetchAll}
+              title="Refresh Dashboard"
+              style={{
+                width: '36px', height: '36px', borderRadius: '10px',
+                border: '1px solid #e2e8f0', backgroundColor: '#ffffff',
+                color: '#64748b', display: 'flex', alignItems: 'center',
+                justifyContent: 'center', cursor: 'pointer', flexShrink: 0
+              }}
+            >
+              <RefreshCw size={15} />
+            </button>
+
+            {/* Live site link */}
+            <a
+              href="/"
+              target="_blank"
+              rel="noreferrer"
+              className="admin-livesite-btn"
+              title="View Public Website"
+              style={{
+                height: '36px', padding: '0 12px', borderRadius: '10px',
+                border: '1px solid #e2e8f0', backgroundColor: '#ffffff',
+                color: '#334155', fontSize: '0.78rem', fontWeight: '650',
+                display: 'inline-flex', alignItems: 'center', gap: '6px',
+                textDecoration: 'none', flexShrink: 0
+              }}
+            >
+              <Home size={14} />
+              <span className="admin-livesite-text">Live Site</span>
             </a>
 
-            {/* User chip */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '6px 12px', borderRadius: '10px', border: '1.5px solid #f1f5f9', backgroundColor: '#fafafa' }}>
-              <div style={{ width: '30px', height: '30px', borderRadius: '50%', background: 'linear-gradient(135deg, #ea580c, #c2410c)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem', fontWeight: '800', color: '#fff' }}>
+            {/* Admin Avatar chip & logout */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', paddingLeft: '4px', borderLeft: '1px solid #f1f5f9' }}>
+              <div
+                title={adminEmail}
+                style={{
+                  width: '34px', height: '34px', borderRadius: '50%',
+                  background: 'linear-gradient(135deg, #ea580c 0%, #c2410c 100%)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  fontSize: '0.82rem', fontWeight: '800', color: '#ffffff',
+                  boxShadow: '0 2px 6px rgba(234, 88, 12, 0.25)', flexShrink: 0
+                }}
+              >
                 {adminEmail.charAt(0).toUpperCase()}
               </div>
-              <div>
-                <div style={{ fontSize: '0.78rem', fontWeight: '700', color: '#0f172a' }}>{adminEmail.split('@')[0]}</div>
-                <div style={{ fontSize: '0.65rem', color: '#94a3b8' }}>Administrator</div>
-              </div>
-            </div>
 
-            <button onClick={handleLogout} style={{ display: 'flex', alignItems: 'center', gap: '7px', padding: '7px 13px', borderRadius: '9px', backgroundColor: '#fef2f2', border: '1.5px solid #fecaca', color: '#dc2626', fontSize: '0.8rem', fontWeight: '700', cursor: 'pointer', fontFamily: 'inherit' }}>
-              <LogOut size={14} /> Logout
-            </button>
+              <button
+                onClick={handleLogout}
+                className="admin-logout-btn"
+                title="Log out from Admin"
+                style={{
+                  height: '34px', padding: '0 10px', borderRadius: '9px',
+                  backgroundColor: '#fef2f2', border: '1px solid #fee2e2',
+                  color: '#dc2626', fontSize: '0.76rem', fontWeight: '700',
+                  cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '5px',
+                  fontFamily: 'inherit', flexShrink: 0
+                }}
+              >
+                <LogOut size={13} />
+                <span className="admin-logout-text">Logout</span>
+              </button>
+            </div>
           </div>
         </header>
 
@@ -541,7 +623,16 @@ export default function AdminPanel() {
             <AnimatePresence mode="wait">
               <motion.div key={activeTab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}>
                 {activeTab === 'dashboard'    && <DashboardPage quotes={quotes} services={services} onTabChange={id => handleNavClick(id, NAV.find(n => n.id === id)?.path)} />}
-                {activeTab === 'quotes'       && <QuotesPage quotes={quotes} onStatusUpdate={handleStatusUpdate} />}
+                {activeTab === 'quotes'       && (
+                  <QuotesPage
+                    quotes={quotes}
+                    onStatusUpdate={handleStatusUpdate}
+                    onQuoteUpdated={(updatedQuote) => {
+                      setQuotes(prev => prev.map(q => (q.id === updatedQuote.id || q._id === updatedQuote._id) ? updatedQuote : q));
+                      showToast('success', 'Email reply recorded!');
+                    }}
+                  />
+                )}
                 {activeTab === 'services'     && <ServicesPage services={services} onDelete={handleDeleteService} onAdd={handleAddService} onUpdate={handleUpdateService} />}
                 {activeTab === 'projects'     && <ProjectsPage projects={projects} onDelete={handleDeleteProject} onAdd={handleAddProject} onUpdate={handleUpdateProject} />}
                 {activeTab === 'heroCarousel' && <HeroCarouselPage settings={settings} onChange={setSettings} onSave={handleSaveSettings} />}

@@ -2,10 +2,11 @@ const mongoose = require('mongoose');
 
 const SettingsSchema = new mongoose.Schema({
   siteName: { type: String, default: 'Floor Shield Australia' },
-  phone: { type: String, default: '1800 231 907' },
-  email: { type: String, default: 'info@floorshield.au' },
-  address: { type: String, default: 'Unit 1/76 Rushdale St, Knoxfield VIC 3180' },
-  abn: { type: String, default: '84 629 184 921' },
+  phone: { type: String, default: '0489 074 340' },
+  tollFree: { type: String, default: '1800 231 907' },
+  email: { type: String, default: 'floorshieldptyltd@gmail.com' },
+  address: { type: String, default: 'Melbourne VIC 3000' },
+  abn: { type: String, default: '75 688 496 166' },
   heroTitle: { type: String },
   heroSubtitle: { type: String },
   heroSlides: [{

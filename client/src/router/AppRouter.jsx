@@ -12,9 +12,12 @@ const ProductsPage    = lazy(() => import('../pages/ProductsPage'));
 const ServicesPage    = lazy(() => import('../pages/ServicesPage'));
 const ProjectsPage    = lazy(() => import('../pages/ProjectsPage'));
 const ProjectDetailPage = lazy(() => import('../pages/ProjectDetailPage'));
-const CalculatorPage  = lazy(() => import('../pages/CalculatorPage'));
+const GetQuotePage    = lazy(() => import('../pages/GetQuotePage'));
 const IndustryPage    = lazy(() => import('../pages/IndustryPage'));
 const AboutPage       = lazy(() => import('../pages/AboutPage'));
+const ContactPage     = lazy(() => import('../pages/ContactPage'));
+const TermsPage       = lazy(() => import('../pages/TermsPage'));
+const PrivacyPage     = lazy(() => import('../pages/PrivacyPage'));
 
 // Lazy-load service detail page
 const ServiceDetailPage = lazy(() => import('../ServiceDetailPage'));
@@ -86,19 +89,22 @@ export default function AppRouter() {
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin/*"     element={<RequireAdmin />} />
 
-        {/* ── Service detail (has its own layout internally) ── */}
-        <Route path="/services/:slug" element={<ServiceDetailPage />} />
-
         {/* ── Public routes wrapped in shared Layout ── */}
         <Route element={<Layout />}>
           <Route index                 element={<HomePage />} />
           <Route path="products"       element={<ProductsPage />} />
           <Route path="services"       element={<ServicesPage />} />
+          <Route path="services/:slug" element={<ServiceDetailPage />} />
           <Route path="projects"       element={<ProjectsPage />} />
           <Route path="projects/:projectId" element={<ProjectDetailPage />} />
-          <Route path="calculator"     element={<CalculatorPage />} />
+          <Route path="get-a-quote"    element={<GetQuotePage />} />
+          <Route path="quote"          element={<GetQuotePage />} />
+          <Route path="calculator"     element={<Navigate to="/get-a-quote" replace />} />
           <Route path="industry"       element={<IndustryPage />} />
           <Route path="about"          element={<AboutPage />} />
+          <Route path="contact"        element={<ContactPage />} />
+          <Route path="terms-and-conditions" element={<TermsPage />} />
+          <Route path="privacy-policy" element={<PrivacyPage />} />
 
           {/* Catch-all → home */}
           <Route path="*" element={<Navigate to="/" replace />} />

@@ -9,6 +9,9 @@ const editableFields = [
   'duration',
   'imageBefore',
   'imageAfter',
+  'beforeImages',
+  'afterImages',
+  'comparisonViews',
   'description',
   'clientCompany',
   'testimonial',
@@ -43,7 +46,17 @@ exports.getProjects = async (req, res) => {
 // GET /api/projects/:id
 exports.getProjectById = async (req, res) => {
   try {
-    const project = await Project.findOne(getProjectFilter(req.params.id));
+    let project = await Project.findOne(getProjectFilter(req.params.id));
+    if (!project) {
+      const allProjects = await Project.find();
+      const normalizeSlug = (str) => (str || '')
+        .toLowerCase()
+        .normalize('NFKD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-|-$/g, '');
+      project = allProjects.find(p => normalizeSlug(p.title) === req.params.id || p.id === req.params.id);
+    }
     if (!project) {
       return res.status(404).json({ error: 'Project not found' });
     }

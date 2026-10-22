@@ -88,7 +88,7 @@ export default function ProductsPage() {
               <button 
                 onClick={() => {
                   setQuoteForm({ ...quoteForm, serviceType: prod.name });
-                  navigate('/calculator');
+                  navigate(`/get-a-quote?service=${encodeURIComponent(prod.name)}`);
                 }}
                 className="btn-primary"
                 style={{ width: '100%', padding: '12px', fontSize: '0.9rem' }}

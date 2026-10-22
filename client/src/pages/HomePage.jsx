@@ -3,17 +3,16 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate, Link } from 'react-router-dom';
 import { 
   ShieldCheck, CheckCircle2, 
-  ArrowRight, Star, Award, Layers3, Check, HelpCircle, 
+  ArrowRight, Star, Award, Layers3, Check,
   ChevronDown, ChevronLeft, ChevronRight, Phone, Mail, MapPin, Sparkles,
   Building2, Eye, Wrench, Package, SlidersHorizontal, Flame, Droplets
 } from 'lucide-react';
 import { useSite } from '../context/SiteContext';
 import { 
-  featuredProcessImages, apcSwatches, engineeringProcess, faqs, brandLogos,
+  featuredProcessImages, apcSwatches, engineeringProcess, brandLogos,
   apcProductLines
 } from '../utils/siteData';
 import { fadeInUp, staggerContainer } from '../utils/constants';
-import { calculateEstimatedPrice } from '../utils/pricing';
 import { getProjectFallbackImage, getProjectPath } from '../utils/projectRoutes';
 
 export default function HomePage() {
@@ -29,7 +28,6 @@ export default function HomePage() {
   const [beforeAfterPos, setBeforeAfterPos] = useState(50);
   const [activeSwatchId, setActiveSwatchId] = useState('silver-ash');
   const [activeProcessStep, setActiveProcessStep] = useState(0);
-  const [activeFaqIndex, setActiveFaqIndex] = useState(0);
   const [activeHeroSlide, setActiveHeroSlide] = useState(0);
 
   const defaultHeroSlides = [
@@ -116,7 +114,6 @@ export default function HomePage() {
     { length: Math.min(3, testimonialReviews.length) },
     (_, offset) => testimonialReviews[(activeReviewIndex + offset) % testimonialReviews.length]
   );
-  const estimate = calculateEstimatedPrice(quoteForm);
 
   return (
           <div className="homepage">
@@ -162,7 +159,7 @@ export default function HomePage() {
                     <motion.button
                       whileHover={{ y: -2 }}
                       whileTap={{ scale: 0.98 }}
-                      onClick={() => navigate('/calculator')}
+                      onClick={() => navigate('/get-a-quote')}
                       className="home-hero-quote"
                     >
                       Get a free quote <ArrowRight size={18} />
@@ -702,11 +699,11 @@ export default function HomePage() {
                           <button 
                             onClick={() => {
                               setQuoteForm({ ...quoteForm, serviceType: currentSwatch.system });
-                              navigate('/calculator');
+                              navigate('/get-a-quote');
                             }}
                             className="btn-primary"
                           >
-                            <span>Calculate Cost For This Finish</span>
+                            <span>Request Quote For This Finish</span>
                             <ArrowRight size={16} />
                           </button>
                           <button 
@@ -926,7 +923,7 @@ export default function HomePage() {
                         <button 
                           onClick={() => {
                             setQuoteForm({ ...quoteForm, serviceType: prod.name });
-                            navigate('/calculator');
+                            navigate('/get-a-quote');
                           }}
                           className="btn-primary"
                           style={{ width: '100%', padding: '10px 18px', fontSize: '0.88rem' }}
@@ -1124,228 +1121,6 @@ export default function HomePage() {
                       })}
                     </motion.div>
                   </AnimatePresence>
-                </div>
-              </div>
-            </section>
-
-            {/* INTERACTIVE INSTANT ESTIMATOR SECTION */}
-            <section id="estimator-section" style={{ padding: '80px 0', backgroundColor: '#f8fafc', borderBottom: '1px solid #e2e8f0' }}>
-              <div className="container">
-                <motion.div 
-                  initial={{ opacity: 0, y: 25 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 0.6 }}
-                  style={{
-                    backgroundColor: '#ffffff',
-                    border: '2px solid #ea580c',
-                    borderRadius: '24px',
-                    padding: '40px',
-                    boxShadow: '0 16px 40px rgba(15, 23, 42, 0.08)'
-                  }}
-                >
-                  <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-                    gap: '40px',
-                    alignItems: 'center'
-                  }}>
-                    <div>
-                      <span className="badge badge-orange">TRANSPARENT FIXED ESTIMATOR</span>
-                      <h2 style={{ fontSize: '2.4rem', marginTop: '10px', marginBottom: '16px', color: '#0f172a' }}>
-                        Calculate Your Floor Cost in 30 Seconds
-                      </h2>
-                      <p style={{ marginBottom: '24px', color: '#475569' }}>
-                        Direct estimating built around Victorian commercial square-meter rates and All Purpose Coatings manufacturer warranties.
-                      </p>
-
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#1e293b' }}>
-                          <CheckCircle2 size={18} color="#059669" />
-                          <span>Genuine All Purpose Coatings (APC) industrial resin</span>
-                        </div>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#1e293b' }}>
-                          <CheckCircle2 size={18} color="#059669" />
-                          <span>Planetary diamond grinding mechanical concrete prep</span>
-                        </div>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#1e293b' }}>
-                          <CheckCircle2 size={18} color="#059669" />
-                          <span>Compliant with AS 4586 slip resistance ratings</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Estimator Interactive Box */}
-                    <div style={{
-                      backgroundColor: '#f8fafc',
-                      border: '1px solid #cbd5e1',
-                      borderRadius: '16px',
-                      padding: '28px',
-                      boxShadow: '0 4px 16px rgba(15, 23, 42, 0.05)'
-                    }}>
-                      <div style={{ marginBottom: '20px' }}>
-                        <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: '800', marginBottom: '8px', color: '#0f172a' }}>
-                          Select All Purpose Coatings System
-                        </label>
-                        <select 
-                          value={quoteForm.serviceType}
-                          onChange={(e) => setQuoteForm({ ...quoteForm, serviceType: e.target.value })}
-                          style={{
-                            width: '100%',
-                            padding: '12px',
-                            backgroundColor: '#ffffff',
-                            border: '1px solid #cbd5e1',
-                            borderRadius: '8px',
-                            color: '#0f172a',
-                            fontWeight: '600'
-                          }}
-                        >
-                          <option value="APC Ultra Flake® Architectural System">APC Ultra Flake® System (Residential & Commercial)</option>
-                          <option value="APC Hyper Flake® Polished Stone Alternative">APC Hyper Flake® (Honed Stone / Terrazzo Alternative)</option>
-                          <option value="EPO100T® High-Build Solid Epoxy">EPO100T® High-Build Epoxy (Warehouses & Factories)</option>
-                          <option value="Quartz Shield® Heavy Industrial System">Quartz Shield® Heavy Industrial System (P5 Slip Rated)</option>
-                          <option value="Sparta-Guard® Fast-Return Polyaspartic">Sparta-Guard® Fast 1-Day Return Polyaspartic</option>
-                          <option value="Metallic Marble & Swirl Coat Artistry">Metallic Marble & Swirl Coat Artistry</option>
-                        </select>
-                      </div>
-
-                      <div style={{ marginBottom: '24px' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-                          <label style={{ fontSize: '0.85rem', fontWeight: '800', color: '#0f172a' }}>
-                            Floor Area: <span style={{ color: '#ea580c' }}>{quoteForm.areaApproxSqm} m²</span>
-                          </label>
-                          <span style={{ fontSize: '0.75rem', color: '#64748b' }}>
-                            {quoteForm.areaApproxSqm <= 50 ? '(Double Garage / Workshop)' : quoteForm.areaApproxSqm <= 120 ? '(Commercial Kitchen / Retail)' : '(Industrial Warehouse / Factory)'}
-                          </span>
-                        </div>
-                        <input 
-                          type="range" 
-                          min="20" 
-                          max="400" 
-                          step="10"
-                          value={quoteForm.areaApproxSqm}
-                          onChange={(e) => setQuoteForm({ ...quoteForm, areaApproxSqm: Number(e.target.value) })}
-                          style={{
-                            width: '100%',
-                            accentColor: '#ea580c',
-                            height: '8px',
-                            borderRadius: '4px',
-                            cursor: 'pointer'
-                          }}
-                        />
-                      </div>
-
-                      {/* Output Estimate Box */}
-                      <div style={{
-                        backgroundColor: '#ffffff',
-                        border: '1px solid #cbd5e1',
-                        borderRadius: '12px',
-                        padding: '18px',
-                        textAlign: 'center',
-                        marginBottom: '20px'
-                      }}>
-                        <div style={{ fontSize: '0.8rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: '700' }}>
-                          Estimated Project Investment
-                        </div>
-                        <div style={{ fontSize: '2.1rem', fontWeight: '800', color: '#059669', margin: '4px 0' }}>
-                          ${estimate.min.toLocaleString()} – ${estimate.max.toLocaleString()} AUD
-                        </div>
-                        <div style={{ fontSize: '0.75rem', color: '#64748b' }}>
-                          Includes planetary diamond surface prep, materials, and 10-year warranty.
-                        </div>
-                      </div>
-
-                      <button 
-                        onClick={() => navigate('/calculator')}
-                        className="btn-primary"
-                        style={{ width: '100%' }}
-                      >
-                        <span>Lock In This Online Estimate</span>
-                        <ArrowRight size={18} />
-                      </button>
-                    </div>
-                  </div>
-                </motion.div>
-              </div>
-            </section>
-
-            {/* ========================================================
-                INTERACTIVE FREQUENTLY ASKED QUESTIONS (FAQ) ACCORDION
-                ======================================================== */}
-            <section style={{ padding: '80px 0', backgroundColor: '#ffffff', borderBottom: '1px solid #e2e8f0' }}>
-              <div className="container" style={{ maxWidth: '850px' }}>
-                <motion.div 
-                  initial={{ opacity: 0, y: 25 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 0.6 }}
-                  style={{ textAlign: 'center', marginBottom: '40px' }}
-                >
-                  <span className="badge badge-orange">TECHNICAL QUESTIONS ANSWERED</span>
-                  <h2 style={{ fontSize: '2.3rem', marginTop: '10px', marginBottom: '14px', color: '#0f172a' }}>
-                    Frequently Asked Questions
-                  </h2>
-                  <p>
-                    Everything you need to know about surface preparation, resin chemistry, tyre resistance, and turnaround times.
-                  </p>
-                </motion.div>
-
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                  {faqs.map((faq, idx) => (
-                    <div 
-                      key={idx}
-                      style={{
-                        backgroundColor: activeFaqIndex === idx ? '#fff7ed' : '#f8fafc',
-                        border: activeFaqIndex === idx ? '2px solid #ea580c' : '1px solid #cbd5e1',
-                        borderRadius: '14px',
-                        overflow: 'hidden',
-                        transition: 'all 0.25s ease'
-                      }}
-                    >
-                      <button
-                        onClick={() => setActiveFaqIndex(activeFaqIndex === idx ? null : idx)}
-                        style={{
-                          width: '100%',
-                          padding: '20px 24px',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                          textAlign: 'left',
-                          background: 'none',
-                          color: '#0f172a',
-                          fontWeight: '800',
-                          fontSize: '1.05rem',
-                          gap: '16px'
-                        }}
-                      >
-                        <span style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                          <HelpCircle size={20} color={activeFaqIndex === idx ? '#ea580c' : '#64748b'} />
-                          <span>{faq.q}</span>
-                        </span>
-                        <ChevronDown 
-                          size={20} 
-                          color={activeFaqIndex === idx ? '#ea580c' : '#64748b'}
-                          style={{
-                            transform: activeFaqIndex === idx ? 'rotate(180deg)' : 'rotate(0deg)',
-                            transition: 'transform 0.2s ease'
-                          }}
-                        />
-                      </button>
-
-                      {activeFaqIndex === idx && (
-                        <div style={{
-                          padding: '0 24px 22px 54px',
-                          color: '#334155',
-                          fontSize: '0.95rem',
-                          lineHeight: 1.65,
-                          borderTop: '1px solid #ffedd5',
-                          paddingTop: '14px'
-                        }}>
-                          {faq.a}
-                        </div>
-                      )}
-                    </div>
-                  ))}
                 </div>
               </div>
             </section>

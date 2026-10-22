@@ -10,63 +10,63 @@ export const navFlooringSystems = [
     desc: "Seamless 5-coat decorative vinyl flake",
     badge: "Most Popular",
     image: "/images/epoxy-flake-garage.jpg",
-    route: "/products"
+    route: "/services/ultra-flake-system"
   },
   {
     name: "APC Hyper Flake®",
     desc: "Polished concrete & crystal terrazzo look",
     badge: "Terrazzo Look",
     image: "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=150&q=80",
-    route: "/products"
+    route: "/services/hyper-flake-system"
   },
   {
     name: "EPO100T® High-Build Epoxy",
     desc: "Heavy industrial cycloaliphatic seamless resin",
     badge: "Heavy Duty",
     image: "/images/industrial-epoxy-warehouse.jpg",
-    route: "/products"
+    route: "/services/epo100t-plain-coat"
   },
   {
     name: "Quartz Shield® P5 Non-Slip",
     desc: "AS 4586 P5 certified commercial kitchens & ramps",
     badge: "HACCP & P5",
     image: "/images/commercial-kitchen-quartz.jpg",
-    route: "/products"
+    route: "/services/quartz-shield-system"
   },
   {
     name: "Sparta-Guard® Polyaspartic",
     desc: "Rapid return-to-service UV stable clear topcoat",
     badge: "Same-Day Cure",
     image: "/images/epoxy-materials-cans.jpg",
-    route: "/products"
+    route: "/services/sparta-guard-polyaspartic"
   },
   {
     name: "Metallic Marble Resins",
     desc: "3D pearlescent molten marble retail finish",
     badge: "Designer 3D",
     image: "/images/metallic-epoxy-floor.jpg",
-    route: "/products"
+    route: "/services/metallic-marble-swirl"
   },
   {
     name: "Husqvarna Diamond Grinding",
     desc: "Planetary grinding & dustless HEPA profiling (CSP 2-3)",
     badge: "Surface Prep",
     image: "/images/concrete-diamond-grinding.jpg",
-    route: "/products"
+    route: "/services/husqvarna-diamond-grinding"
   },
   {
     name: "Safety Line Marking",
     desc: "High-visibility pedestrian & forklift demarcations",
     badge: "OH&S Safety",
     image: "/images/industrial-epoxy-warehouse.jpg",
-    route: "/products"
+    route: "/services/safety-line-marking"
   },
   {
     name: "HACCP Sanitary Coving",
     desc: "100mm seamless curved perimeter wall cove",
     badge: "Food Safe",
     image: "/images/commercial-kitchen-quartz.jpg",
-    route: "/products"
+    route: "/services/haccp-sanitary-coving"
   }
 ];
 

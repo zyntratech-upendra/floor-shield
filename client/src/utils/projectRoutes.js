@@ -8,10 +8,13 @@ export function getProjectSlug(project) {
 }
 
 export function getProjectRouteKey(project) {
-  return String(project.id || project._id || getProjectSlug(project));
+  if (!project) return '';
+  const slug = getProjectSlug(project);
+  return slug || String(project._id || project.id || '');
 }
 
 export function getProjectPath(project) {
+  if (!project) return '/projects';
   return `/projects/${encodeURIComponent(getProjectRouteKey(project))}`;
 }
 

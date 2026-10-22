@@ -6,10 +6,11 @@ const SiteContext = createContext(null);
 export function SiteProvider({ children }) {
   const [settings, setSettings] = useState({
     siteName: "Floor Shield Australia",
-    phone: "1800 231 907",
-    email: "info@floorshield.au",
-    address: "Unit 1/76 Rushdale St, Knoxfield VIC 3180",
-    abn: "84 629 184 921",
+    phone: "0489 074 340",
+    tollFree: "1800 231 907",
+    email: "floorshieldptyltd@gmail.com",
+    address: "Melbourne VIC 3000",
+    abn: "75 688 496 166",
     heroTitle: "Premium epoxy floors installed fast, built to last.",
     heroSubtitle: "Transform tired concrete into a seamless, non-slip floor with Australian-made coating systems, certified installers and a clear quote before work begins.",
     heroSlides: [

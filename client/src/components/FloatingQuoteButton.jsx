@@ -12,7 +12,7 @@ export default function FloatingQuoteButton() {
       aria-label="Get an instant free quote"
       title="Get an instant free quote"
       onClick={() => {
-        navigate('/calculator');
+        navigate('/get-a-quote');
         const elem = document.getElementById('estimator-section');
         if (elem) elem.scrollIntoView({ behavior: 'smooth' });
       }}
